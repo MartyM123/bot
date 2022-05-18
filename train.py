@@ -7,7 +7,6 @@ import numpy
 data_inputs = make_list(make_frame(data()))
 
 num_inputs = data_inputs.shape[1]
-num_classes = 2
 num_classes = 3
 num_solutions = 6
 
@@ -27,6 +26,7 @@ def fitness_func(solution, sol_idx):
 
     predictions = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],
                                    data_inputs=data_inputs)
+    print(predictions)
     correct_predictions = numpy.where(predictions == data_outputs)[0].size
     solution_fitness = (correct_predictions/data_outputs.size)*100
 
@@ -55,29 +55,29 @@ init_range_high = 5
 
 
 ga_instance = pygad.GA(num_generations=num_generations,
-                       
+
                        mutation_num_genes=2,
-                       
+
                        num_parents_mating=num_parents_mating,
-                       
+
                        initial_population=initial_population,
-                       
+
                        fitness_func=fitness_func,
-                       
+
                        mutation_percent_genes=mutation_percent_genes,
-                       
+
                        init_range_low=init_range_low,
-                       
+
                        init_range_high=init_range_high,
-                       
+
                        parent_selection_type=parent_selection_type,
-                       
+
                        crossover_type=crossover_type,
-                       
+
                        mutation_type='random',
-                       
+
                        keep_parents=keep_parents,
-                       
+
                        callback_generation=None)
 
 ga_instance.run()

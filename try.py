@@ -1,5 +1,6 @@
 import numpy
 import pygad
+import pygad.gann
 
 # Preparing the NumPy array of the inputs.
 data_inputs = numpy.array([[1, 1],
@@ -69,8 +70,7 @@ ga_instance = pygad.GA(num_generations=num_generations,
                        parent_selection_type=parent_selection_type,
                        crossover_type=crossover_type,
                        mutation_type=mutation_type,
-                       keep_parents=keep_parents,
-                       callback_generation=callback_generation)
+                       keep_parents=keep_parents)
 
 def callback_generation(ga_instance):
     global GANN_instance
