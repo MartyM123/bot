@@ -8,6 +8,7 @@ data_inputs = make_list(make_frame(data()))
 
 num_inputs = data_inputs.shape[1]
 num_classes = 2
+num_classes = 3
 num_solutions = 6
 
 GANN_instance = pygad.gann.GANN(num_solutions=num_solutions,

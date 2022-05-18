@@ -8,9 +8,9 @@ data_inputs = numpy.array([[1, 1],
                            [0, 0]])
 
 # Preparing the NumPy array of the outputs.
-data_outputs = numpy.array([0, 
-                            1, 
-                            1, 
+data_outputs = numpy.array([0,
+                            1,
+                            1,
                             0])
 
 num_inputs = data_inputs.shape[1]
@@ -32,6 +32,7 @@ def fitness_func(solution, sol_idx):
 
     predictions = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],
                                    data_inputs=data_inputs, problem_type = 'classification')
+    print(predictions)
     correct_predictions = numpy.where(predictions == data_outputs)[0].size
     solution_fitness = (correct_predictions/data_outputs.size)*100
 
@@ -51,15 +52,15 @@ parent_selection_type = "sss"
 
 crossover_type = "single_point"
 
-mutation_type = "random" 
+mutation_type = "random"
 
 keep_parents = 1
 
 init_range_low = -2
 init_range_high = 5
 
-ga_instance = pygad.GA(num_generations=num_generations, 
-                       num_parents_mating=num_parents_mating, 
+ga_instance = pygad.GA(num_generations=num_generations,
+                       num_parents_mating=num_parents_mating,
                        initial_population=initial_population,
                        fitness_func=fitness_func,
                        mutation_percent_genes=mutation_percent_genes,
