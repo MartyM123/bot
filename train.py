@@ -6,15 +6,11 @@ import numpy
 # Preparing the NumPy array of the inputs.
 data_inputs = make_list(make_frame(data()))
 
-num_inputs = data_inputs.shape[1]
-num_classes = 3
-num_solutions = 6
-
-GANN_instance = pygad.gann.GANN(num_solutions=num_solutions,
-                                num_neurons_input=num_inputs,
+GANN_instance = pygad.gann.GANN(num_solutions=3, #numbers of solutions in one generation
+                                num_neurons_input=40,
+                                num_neurons_output=3,
                                 num_neurons_hidden_layers=[60,60],
-                                num_neurons_output=num_classes,
-                                hidden_activations=["relu"],
+                                hidden_activations="relu",
                                 output_activation="softmax")
 
 #0 buy
@@ -26,9 +22,7 @@ def fitness_func(solution, sol_idx):
 
     predictions = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],
                                    data_inputs=data_inputs)
-    print(predictions)
-    correct_predictions = numpy.where(predictions == data_outputs)[0].size
-    solution_fitness = (correct_predictions/data_outputs.size)*100
+    solution_fitness = 1
 
     return solution_fitness
 
@@ -38,46 +32,33 @@ population_vectors = pygad.gann.population_as_vectors(population_networks=GANN_i
 
 initial_population = population_vectors.copy()
 
-num_parents_mating = 4
-
-num_generations = 500
-
-mutation_percent_genes = 5
-
-parent_selection_type = "sss"
-
-crossover_type = "single_point"
-
-keep_parents = 1
-
-init_range_low = -2
-init_range_high = 5
-
-
-ga_instance = pygad.GA(num_generations=num_generations,
+ga_instance = pygad.GA(num_generations=20,
 
                        mutation_num_genes=2,
 
-                       num_parents_mating=num_parents_mating,
-
+                       num_parents_mating = 2,
+                       
                        initial_population=initial_population,
 
                        fitness_func=fitness_func,
 
-                       mutation_percent_genes=mutation_percent_genes,
+                       sol_per_pop = 50,
 
-                       init_range_low=init_range_low,
+                       mutation_percent_genes=5,
 
-                       init_range_high=init_range_high,
+                       init_range_low=-2,
 
-                       parent_selection_type=parent_selection_type,
+                       init_range_high=5,
 
-                       crossover_type=crossover_type,
+                       parent_selection_type="sss",
+
+                       crossover_type="single_point",
 
                        mutation_type='random',
 
-                       keep_parents=keep_parents,
-
-                       callback_generation=None)
-
+                       keep_parents=1
+                       )
+ga_instance.sol_per_pop=50
 ga_instance.run()
+
+
