@@ -13,6 +13,7 @@ GANN_instance = pygad.gann.GANN(num_solutions=3, #numbers of solutions in one ge
                                 hidden_activations="relu",
                                 output_activation="softmax")
 
+GANN_instance.num_neurons_output=3
 #0 buy
 #1 sell
 #2 wait
@@ -20,10 +21,10 @@ GANN_instance = pygad.gann.GANN(num_solutions=3, #numbers of solutions in one ge
 def fitness_func(solution, sol_idx):
     global GANN_instance, data_inputs, data_outputs
 
-    predictions = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],
-                                   data_inputs=data_inputs)
+    prediction = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],data_inputs=data_inputs[0].reshape((1, 40)))
+    prediction = int(prediction[0])
     solution_fitness = 1
-
+    print(data_inputs[0])
     return solution_fitness
 
 
@@ -37,7 +38,7 @@ ga_instance = pygad.GA(num_generations=20,
                        mutation_num_genes=2,
 
                        num_parents_mating = 2,
-                       
+
                        initial_population=initial_population,
 
                        fitness_func=fitness_func,
@@ -60,5 +61,3 @@ ga_instance = pygad.GA(num_generations=20,
                        )
 ga_instance.sol_per_pop=50
 ga_instance.run()
-
-
