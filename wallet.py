@@ -2,7 +2,7 @@ class wallet:
     def __init__(self, usd):
         self.usd = usd
         self.crypto = 0
-    
+
     def buy(self, crypto_am, price):
         self.crypto += crypto_am
         self.usd -= price*crypto_am
@@ -13,3 +13,7 @@ class wallet:
 
     def info(self):
         return self.usd, self.crypto
+
+    def sell_all(self, price):
+        self.sell(crypto_am=self.crypto, price)
+        return self.usd
