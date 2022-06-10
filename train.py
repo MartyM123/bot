@@ -20,11 +20,10 @@ GANN_instance.num_neurons_output=3
 
 def fitness_func(solution, sol_idx):
     global GANN_instance, data_inputs, data_outputs
-
     prediction = pygad.nn.predict(last_layer=GANN_instance.population_networks[sol_idx],data_inputs=data_inputs[0].reshape((1, 40)))
     prediction = int(prediction[0])
     solution_fitness = 1
-    print(data_inputs[0])
+    print(prediction)
     return solution_fitness
 
 
