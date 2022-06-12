@@ -15,7 +15,4 @@ class wallet:
         return self.usd, self.crypto
 
     def sell_all(self, price):
-        self.sell(crypto_am=self.crypto, price)
-
-    def money():
-        return self.usd
+        self.sell(crypto_am=self.crypto, price=price)
