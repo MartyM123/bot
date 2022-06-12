@@ -1,6 +1,7 @@
 class wallet:
-    def __init__(self, usd):
-        self.usd = usd
+    def __init__(self, start_budget):
+        self.start_budget = start_budget
+        self.usd = start_budget
         self.crypto = 0
 
     def buy(self, crypto_am, price):
